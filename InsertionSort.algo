@@ -1,0 +1,78 @@
+FUNCTION Read_size() : INTEGER
+VAR
+    size : INTEGER
+BEGIN
+
+    REPEAT
+        Read(size);
+    UNTIL (size < 0 OR size > 10)
+    
+    RETURN size ;
+
+END
+
+
+PROCEDURE Read_elems(size : INTEGER, VAR tab : ARRAY_OF INTEGER)
+VAR
+    i : INTEGER
+BEGIN
+
+    FOR i FROM 0 TO size STEP 1  DO
+        Read(tab[i]);
+    END_FOR
+
+END
+
+
+PROCEDURE Sorting(size : INTEGER, VAR tab : ARRAY_OF INTEGER) 
+VAR
+    i, j, current : INTEGER
+BEGIN
+
+    FOR i FROM 1 TO size STEP 1  DO
+
+        //on stock la premiere valeur de tab (qu'on considere comme triee) dans current.
+        current := tab[i]; 
+
+        // on place l'index j avant l'index i d'une case (j=0)
+        j := i - 1; 
+
+        //tant que j>0 et que l'element a l'index j (element 1 case avant ) est plus grand que l'element a l'index i (element 1 case apres)
+        WHILE (j > 0 AND tab[j] > current) DO
+
+            //On copie (deplace) l'element a l'index [j] vers la droite [j+1] d'une case
+            tab[j+1] := tab[j];
+
+            j -= 1;
+        END_WHILE
+        
+        //on insert (la variable stockee) l'element non-triee a la position correct 
+        tab[j+1] := current;
+
+    END_FOR
+
+END
+
+
+
+ALGORITHM Insertion_Sort
+VAR
+    tab : ARRAY_OF INTEGER[10]
+    i, j, current : INTEGER
+BEGIN
+
+    //Read size of tab elemts
+    size := Read_size();
+
+    //Read elemts
+    Read_elems(size, tab);
+
+    //Sort tab
+    Sorting(size, tab);
+
+    //Affiche tab
+    FOR i FROM 1 TO size STEP 1  DO
+        Write(tab[i]);
+    END_FOR
+
+END
